@@ -5,9 +5,16 @@ import React, { useEffect, useState } from 'react';
 export default function App() {
     const [userList, setUserList] = useState([]);
 
+    const params = {
+        username: 'adora',
+    };
+
     const [{ data: userdata, loading, error }, refetch] = useAxios({
-        url: 'http://localhost:8080/products',
+        url: 'http://localhost:8080/login',
+        params,
     });
+
+    console.log(userdata);
 
     useEffect(() => {
         if (userdata) {

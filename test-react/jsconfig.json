@@ -2,5 +2,5 @@
     "compilerOptions": {
         "baseUrl": "src"
     },
-    "include": ["src", "server.js"]
+    "include": ["src", "server/server.js", "server/db.js"]
 	}
