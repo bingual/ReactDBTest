@@ -4,11 +4,14 @@ import reportWebVitals from './reportWebVitals';
 import 'antd/dist/antd.min.css';
 import { BrowserRouter } from 'react-router-dom';
 import Root from 'pages';
+import { AppProvider } from 'store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <BrowserRouter>
-        <Root />
+        <AppProvider>
+            <Root />
+        </AppProvider>
     </BrowserRouter>,
 );
 

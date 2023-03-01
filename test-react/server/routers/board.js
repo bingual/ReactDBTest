@@ -5,7 +5,7 @@ const db = require('../db');
 // 미들웨어
 function isAuthenticated(req, res, next) {
     if (req.session.user) next();
-    else res.json({ login: false });
+    else res.json([]);
 }
 
 // 게시글 목록

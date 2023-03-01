@@ -29,7 +29,10 @@ router.post('/login', (req, res, next) => {
                 // 세션이 저장되기전에는 실행되지않음
                 req.session.save(function (err) {
                     if (err) return next(err);
-                    res.redirect('/posts');
+                    res.json({
+                        user: req.session.user,
+                        isAuthenticated: true,
+                    });
                 });
             });
         } else res.json(err);
@@ -43,7 +46,7 @@ router.post('/logout', (req, res, next) => {
         if (err) next(err);
         req.session.regenerate(function (err) {
             if (err) next(err);
-            res.json({ result: '로그아웃 성공' });
+            res.json({ isAuthenticated: false });
         });
     });
 });

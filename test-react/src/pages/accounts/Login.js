@@ -2,8 +2,12 @@ import React from 'react';
 import Axios from 'axios';
 import { Form, Input, Card, Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import { useAppContext } from 'store';
+import { setSession } from 'store';
+import { deleteSession } from 'store';
 
 export default function Login() {
+    const { dispatch } = useAppContext();
     const nav = useNavigate();
 
     const handleFinish = (values) => {
@@ -20,7 +24,8 @@ export default function Login() {
                     params,
                     { withCredentials: true },
                 );
-                console.log(response);
+                const { data } = response;
+                dispatch(setSession(data));
             } catch (error) {
                 console.error(error);
             }

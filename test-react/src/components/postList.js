@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import useAxios from 'axios-hooks';
+import { useAppContext } from 'store';
 
 export default function PostList() {
+    const { store } = useAppContext();
+    console.log(store);
+
     const [postList, setPostList] = useState([]);
 
     const [{ data: originPostList, loding, error }, refetch] = useAxios({
