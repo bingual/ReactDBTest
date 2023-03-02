@@ -13,7 +13,7 @@ router.get('/posts', isAuthenticated, (req, res) => {
     const sql = 'select * from board order by id desc';
     db.query(sql, (err, data) => {
         if (!err && data) {
-            res.json(data);
+            res.status(200).json(data);
         } else res.json(err);
     });
 });

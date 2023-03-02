@@ -8,8 +8,8 @@ router.post('/signup', (req, res) => {
     const { username, password } = userData;
     const sql = 'insert into user values(null, ?, ?)';
     db.query(sql, [username, password], (err, data) => {
-        if (!err) res.json({ result: '회원가입 성공' });
-        else res.json(err);
+        if (!err) res.status(200).json({ result: 'ok' });
+        else res.status(401).json(err);
     });
 });
 
@@ -29,13 +29,13 @@ router.post('/login', (req, res, next) => {
                 // 세션이 저장되기전에는 실행되지않음
                 req.session.save(function (err) {
                     if (err) return next(err);
-                    res.json({
+                    res.status(200).json({
                         user: req.session.user,
                         isAuthenticated: true,
                     });
                 });
             });
-        } else res.json(err);
+        } else res.status(401).json(err);
     });
 });
 
@@ -46,7 +46,7 @@ router.post('/logout', (req, res, next) => {
         if (err) next(err);
         req.session.regenerate(function (err) {
             if (err) next(err);
-            res.json({ isAuthenticated: false });
+            res.json({ result: 'ok' });
         });
     });
 });

@@ -1,8 +1,10 @@
 import React from 'react';
 import Axios from 'axios';
 import { Button, Card, Form, Input } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 export default function Signup() {
+    const navigate = useNavigate();
     const handleFinish = (values) => {
         async function fn() {
             const { username, password } = values;
@@ -17,7 +19,8 @@ export default function Signup() {
                     params,
                     { withCredentials: true },
                 );
-                console.log(response);
+                alert('회원가입 성공. 로그인 페이지로 이동합니다.');
+                navigate('/accounts/login');
             } catch (error) {
                 console.error(error);
             }

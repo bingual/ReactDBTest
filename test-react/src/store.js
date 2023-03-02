@@ -2,6 +2,7 @@ import React, { createContext, useContext } from 'react';
 import useReducerWithSideEffects, {
     UpdateWithSideEffect,
 } from 'use-reducer-with-side-effects';
+import { getStorageItem, setStorageItem } from 'utils/useLocalStorage';
 
 const AppContext = createContext();
 
@@ -15,25 +16,33 @@ const reducer = (prevState, action) => {
             user: user,
             isAuthenticated: isAuthenticated,
         };
-        console.log('session : ', newState);
-        return UpdateWithSideEffect(newState, (state, dispatch) => {});
+        return UpdateWithSideEffect(newState, (state, dispatch) => {
+            setStorageItem('session', {
+                user: user,
+                isAuthenticated: isAuthenticated,
+            });
+        });
     } else if (type === LOGOUT) {
         const newState = {
             user: '',
             isAuthenticated: false,
         };
-        return UpdateWithSideEffect(newState, (state, dispatch) => {});
+        return UpdateWithSideEffect(newState, (state, dispatch) => {
+            setStorageItem('session', {
+                user: '',
+                isAuthenticated: '',
+            });
+        });
     }
     return prevState;
 };
 
 export const AppProvider = ({ children }) => {
+    const session = getStorageItem('session', '');
     const [store, dispatch] = useReducerWithSideEffects(reducer, {
-        user: '',
-        isAuthenticated: false,
+        user: session.user,
+        isAuthenticated: session.isAuthenticated,
     });
-
-    console.log('store', store);
 
     return (
         <AppContext.Provider value={{ store, dispatch }}>

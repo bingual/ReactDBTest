@@ -8,7 +8,7 @@ import { deleteSession } from 'store';
 
 export default function Login() {
     const { dispatch } = useAppContext();
-    const nav = useNavigate();
+    const navigate = useNavigate();
 
     const handleFinish = (values) => {
         async function fn() {
@@ -26,6 +26,7 @@ export default function Login() {
                 );
                 const { data } = response;
                 dispatch(setSession(data));
+                navigate('/')
             } catch (error) {
                 console.error(error);
             }
