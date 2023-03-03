@@ -1,10 +1,10 @@
 import React from 'react';
 import Axios from 'axios';
-import { Form, Input, Card, Button } from 'antd';
+import { SmileOutlined } from '@ant-design/icons';
+import { Form, Input, Card, Button, notification } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useAppContext } from 'store';
 import { setSession } from 'store';
-import { deleteSession } from 'store';
 
 export default function Login() {
     const { dispatch } = useAppContext();
@@ -26,16 +26,24 @@ export default function Login() {
                 );
                 const { data } = response;
                 dispatch(setSession(data));
-                navigate('/')
+                navigate('/');
             } catch (error) {
                 console.error(error);
             }
         }
         fn();
     };
+
+    const handleSignupPage = () => {
+        notification.open({
+            message: '회원가입 페이지로 이동합니다.',
+            icon: <SmileOutlined style={{ color: '#108ee9' }} />,
+        });
+        navigate('/accounts/signup');
+    };
     return (
         <div>
-            <Form onFinish={handleFinish}>
+            <Form {...layout} onFinish={handleFinish}>
                 <Card title={'로그인'}>
                     <Form.Item
                         label="아이디"
@@ -53,13 +61,31 @@ export default function Login() {
                         <Input.Password />
                     </Form.Item>
 
-                    <Form.Item>
+                    <Form.Item {...tailLayout}>
                         <Button type="primary" htmlType="submit">
                             로그인
                         </Button>
+                    </Form.Item>
+
+                    <Form.Item {...tailLayout}>
+                        <p>
+                            계정이 없습니까?{' '}
+                            <Button onClick={handleSignupPage}>
+                                회원가입 하기
+                            </Button>
+                        </p>
                     </Form.Item>
                 </Card>
             </Form>
         </div>
     );
 }
+
+const layout = {
+    labelCol: { span: 5 },
+    wrapperCol: { span: 16 },
+};
+
+const tailLayout = {
+    wrapperCol: { offset: 5, span: 16 },
+};

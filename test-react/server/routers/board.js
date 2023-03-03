@@ -9,7 +9,7 @@ function isAuthenticated(req, res, next) {
 }
 
 // 게시글 목록
-router.get('/posts', isAuthenticated, (req, res) => {
+router.get('/posts', (req, res) => {
     const sql = 'select * from board order by id desc';
     db.query(sql, (err, data) => {
         if (!err && data) {
